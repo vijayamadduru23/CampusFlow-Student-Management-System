@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111a35">
+    <title>Student Management | CampusFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#overview" aria-label="CampusFlow home">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M4 11.2 16 5l12 6.2L16 17.5 4 11.2Z"/><path d="M8.2 14.1v6.2c4.6 3.8 11 3.8 15.6 0v-6.2M28 11.5v8"/></svg>
+            </span>
+            <span class="brand-copy"><strong>CampusFlow</strong><small>STUDENT PORTAL</small></span>
+        </a>
+
+        <div class="nav-label">WORKSPACE</div>
+        <nav class="side-nav" aria-label="Main navigation">
+            <a class="nav-link active" href="#overview">
+                <span class="nav-icon" aria-hidden="true">⌂</span><span>Overview</span>
+            </a>
+            <a class="nav-link" href="#students">
+                <span class="nav-icon" aria-hidden="true">▤</span><span>Students</span>
+            </a>
+            <a class="nav-link" href="#statistics">
+                <span class="nav-icon" aria-hidden="true">▥</span><span>Statistics</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <span class="help-spark" aria-hidden="true">✦</span>
+                <strong>Your campus,<br>in one place.</strong>
+                <p>Manage student records with ease.</p>
+            </div>
+            <div class="profile-chip">
+                <span class="avatar">CF</span>
+                <span class="profile-copy"><strong>Campus Admin</strong><small>Administrator</small></span>
+                <span class="profile-dot" title="Online"></span>
+            </div>
+        </div>
+    </aside>
+
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+    <main class="main-content" id="overview">
+        <header class="topbar">
+            <button class="icon-button menu-button" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="breadcrumb"><span>Workspace</span><b>/</b><strong>Overview</strong></div>
+            <div class="topbar-right">
+                <span class="live-status"><i></i> System live</span>
+                <span class="topbar-divider"></span>
+                <span class="today-label" id="todayLabel"></span>
+                <span class="top-avatar" aria-label="Campus Admin">CA</span>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <section class="welcome-row">
+                <div>
+                    <div class="eyebrow"><span class="eyebrow-line"></span> STUDENT ADMINISTRATION</div>
+                    <h1>Good day, Admin <span class="wave" aria-hidden="true">✦</span></h1>
+                    <p class="welcome-subtitle">Here’s what’s happening across your student community.</p>
+                </div>
+                <button class="button button-primary" id="addStudentTop" type="button">
+                    <span class="button-plus" aria-hidden="true">+</span> Add student
+                </button>
+            </section>
+
+            <section class="stats-grid" id="statistics" aria-label="Student statistics">
+                <article class="stat-card stat-indigo">
+                    <div class="stat-top"><span class="stat-icon">♙</span><span class="stat-tag">ENROLMENT</span></div>
+                    <p class="stat-label">Total students</p>
+                    <div class="stat-value" id="totalStudents"><span class="skeleton-value"></span></div>
+                    <p class="stat-foot">Registered student records</p>
+                    <span class="stat-decoration"></span>
+                </article>
+                <article class="stat-card stat-cyan">
+                    <div class="stat-top"><span class="stat-icon">▦</span><span class="stat-tag">PROGRAMS</span></div>
+                    <p class="stat-label">Total courses</p>
+                    <div class="stat-value" id="totalCourses"><span class="skeleton-value"></span></div>
+                    <p class="stat-foot">Distinct courses represented</p>
+                    <span class="stat-decoration"></span>
+                </article>
+                <article class="stat-card stat-violet">
+                    <div class="stat-top"><span class="stat-icon">⌁</span><span class="stat-tag">PERFORMANCE</span></div>
+                    <p class="stat-label">Average marks</p>
+                    <div class="stat-value" id="averageMarks"><span class="skeleton-value"></span></div>
+                    <p class="stat-foot">Across all student records</p>
+                    <span class="stat-decoration"></span>
+                </article>
+                <article class="stat-card stat-amber">
+                    <div class="stat-top"><span class="stat-icon">↗</span><span class="stat-tag">TOP SCORE</span></div>
+                    <p class="stat-label">Highest marks</p>
+                    <div class="stat-value" id="highestMarks"><span class="skeleton-value"></span></div>
+                    <p class="stat-foot">Best recorded result</p>
+                    <span class="stat-decoration"></span>
+                </article>
+                <article class="stat-card stat-rose">
+                    <div class="stat-top"><span class="stat-icon">↘</span><span class="stat-tag">LOWEST SCORE</span></div>
+                    <p class="stat-label">Lowest marks</p>
+                    <div class="stat-value" id="lowestMarks"><span class="skeleton-value"></span></div>
+                    <p class="stat-foot">Room to grow, every day</p>
+                    <span class="stat-decoration"></span>
+                </article>
+            </section>
+
+            <section class="analytics-grid" aria-label="Student analytics">
+                <article class="panel chart-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">COURSE MIX</span>
+                            <h2>Students by course</h2>
+                            <p class="chart-subtitle" id="courseChartSummary">Loading course data…</p>
+                        </div>
+                        <span class="chart-icon course-chart-icon" aria-hidden="true">▦</span>
+                    </div>
+                    <div class="course-chart" id="courseChart" aria-live="polite">
+                        <div class="loading-row"><span class="loader"></span> Loading course data…</div>
+                    </div>
+                </article>
+
+                <article class="panel chart-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">GRADE BREAKDOWN</span>
+                            <h2>Student performance</h2>
+                            <p class="chart-subtitle" id="performanceChartSummary">Loading marks data…</p>
+                        </div>
+                        <span class="chart-icon performance-chart-icon" aria-hidden="true">↗</span>
+                    </div>
+                    <div class="performance-chart" id="performanceChart" aria-live="polite">
+                        <div class="loading-row"><span class="loader"></span> Loading marks data…</div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel recent-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">LATEST ACTIVITY</span>
+                            <h2>Recent students</h2>
+                        </div>
+                        <a class="text-link" href="#students">View all <span aria-hidden="true">→</span></a>
+                    </div>
+                    <div class="recent-list" id="recentStudents" aria-live="polite">
+                        <div class="loading-row"><span class="loader"></span> Loading students…</div>
+                    </div>
+                </article>
+
+                <article class="panel spotlight-panel">
+                    <div class="spotlight-orb orb-one"></div>
+                    <div class="spotlight-orb orb-two"></div>
+                    <div class="spotlight-content">
+                        <span class="spotlight-icon" aria-hidden="true">✦</span>
+                        <span class="section-kicker">CAMPUS SNAPSHOT</span>
+                        <h2>Every student has a story.</h2>
+                        <p>Keep your student directory up to date and your campus community connected.</p>
+                        <button class="button button-light" id="spotlightAdd" type="button">Register a student <span aria-hidden="true">→</span></button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="panel directory-panel" id="students">
+                <div class="directory-heading">
+                    <div>
+                        <span class="section-kicker">CAMPUS DIRECTORY</span>
+                        <h2>All students <span class="count-pill" id="studentCount">—</span></h2>
+                        <p class="panel-subtitle">Manage and keep track of every student in your system.</p>
+                    </div>
+                    <button class="button button-primary button-small" id="addStudentTable" type="button">
+                        <span class="button-plus" aria-hidden="true">+</span> Add student
+                    </button>
+                </div>
+
+                <div class="table-toolbar">
+                    <label class="search-box">
+                        <span class="search-icon" aria-hidden="true">⌕</span>
+                        <input type="search" id="tableSearch" aria-label="Search students by name, course, email, or ID" placeholder="Search name, course, email, or ID…" autocomplete="off">
+                        <kbd>⌘ K</kbd>
+                    </label>
+                    <form class="id-search" id="idSearchForm" aria-label="Find a student by ID">
+                        <label class="sr-only" for="studentIdSearch">Search by student ID</label>
+                        <input type="text" id="studentIdSearch" inputmode="numeric" pattern="[1-9][0-9]*" autocomplete="off" placeholder="Find by ID">
+                        <button class="button button-outline" type="submit">Find ID</button>
+                    </form>
+                    <button class="icon-button refresh-button" id="refreshButton" type="button" title="Refresh student records" aria-label="Refresh student records">↻</button>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">STUDENT</th>
+                            <th scope="col">AGE</th>
+                            <th scope="col">GENDER</th>
+                            <th scope="col">COURSE</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">PHONE</th>
+                            <th scope="col">MARKS</th>
+                            <th scope="col" class="actions-heading">ACTIONS</th>
+                        </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                        <tr><td class="table-message" colspan="9"><span class="loader"></span> Loading student records…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span id="tableSummary">Loading directory…</span>
+                    <span class="footer-note"><i></i> Data synced with your student database</span>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <span>© <span id="currentYear"></span> CampusFlow Student Management</span>
+                <span>Built for brighter futures <b>✦</b></span>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<dialog class="student-dialog" id="studentDialog" aria-labelledby="dialogTitle">
+    <form id="studentForm" novalidate>
+        <div class="dialog-header">
+            <div>
+                <span class="section-kicker" id="dialogEyebrow">STUDENT RECORD</span>
+                <h2 id="dialogTitle">Add a student</h2>
+                <p id="dialogDescription">Enter the student’s profile details below.</p>
+            </div>
+            <button class="dialog-close" id="closeDialog" type="button" aria-label="Close dialog">×</button>
+        </div>
+
+        <div class="form-grid">
+            <label class="form-field form-span">
+                <span>Full name <b>*</b></span>
+                <input name="name" type="text" maxlength="120" placeholder="e.g. Alex Morgan" required autocomplete="name" aria-describedby="nameError">
+                <small class="field-error" id="nameError" data-error-for="name" aria-live="polite"></small>
+            </label>
+            <label class="form-field">
+                <span>Age <b>*</b></span>
+                <input name="age" type="number" min="16" max="60" placeholder="16–60" required aria-describedby="ageError">
+                <small class="field-error" id="ageError" data-error-for="age" aria-live="polite"></small>
+            </label>
+            <label class="form-field">
+                <span>Gender <b>*</b></span>
+                <input name="gender" type="text" maxlength="40" placeholder="e.g. Female" required aria-describedby="genderError">
+                <small class="field-error" id="genderError" data-error-for="gender" aria-live="polite"></small>
+            </label>
+            <label class="form-field form-span">
+                <span>Course <b>*</b></span>
+                <input name="course" type="text" maxlength="100" placeholder="e.g. B.Tech Computer Science" required aria-describedby="courseError">
+                <small class="field-error" id="courseError" data-error-for="course" aria-live="polite"></small>
+            </label>
+            <label class="form-field form-span">
+                <span>Email address <b>*</b></span>
+                <input name="email" type="email" maxlength="160" placeholder="student@example.com" required autocomplete="email" aria-describedby="emailError">
+                <small class="field-error" id="emailError" data-error-for="email" aria-live="polite"></small>
+            </label>
+            <label class="form-field">
+                <span>Phone number <b>*</b></span>
+                <input name="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit number" required autocomplete="tel" aria-describedby="phoneError">
+                <small class="field-error" id="phoneError" data-error-for="phone" aria-live="polite"></small>
+            </label>
+            <label class="form-field">
+                <span>Marks <b>*</b></span>
+                <input name="marks" type="number" min="0" max="100" step="0.01" placeholder="0–100" required aria-describedby="marksError">
+                <small class="field-error" id="marksError" data-error-for="marks" aria-live="polite"></small>
+            </label>
+            <label class="form-field form-span">
+                <span>Address <b>*</b></span>
+                <textarea name="address" rows="2" maxlength="240" placeholder="City, state or full address" required autocomplete="street-address" aria-describedby="addressError"></textarea>
+                <small class="field-error" id="addressError" data-error-for="address" aria-live="polite"></small>
+            </label>
+        </div>
+
+        <div class="dialog-actions">
+            <button class="button button-outline" id="cancelDialog" type="button">Cancel</button>
+            <button class="button button-primary" id="saveStudentButton" type="submit"><span class="button-plus" aria-hidden="true">+</span> Save student</button>
+        </div>
+    </form>
+</dialog>
+
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
