@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111a35">
+    <title>Sign in | CampusFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/login.css">
+    <script src="/login.js" defer></script>
+</head>
+<body>
+<main class="login-layout">
+    <section class="login-brand-panel" aria-label="CampusFlow">
+        <a class="brand" href="/login.html" aria-label="CampusFlow sign in">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M4 11.2 16 5l12 6.2L16 17.5 4 11.2Z"/><path d="M8.2 14.1v6.2c4.6 3.8 11 3.8 15.6 0v-6.2M28 11.5v8"/></svg>
+            </span>
+            <span class="brand-copy"><strong>CampusFlow</strong><small>STUDENT PORTAL</small></span>
+        </a>
+        <div class="brand-message">
+            <span class="eyebrow"><span></span> STUDENT ADMINISTRATION</span>
+            <h1>Your campus,<br>in one place.</h1>
+            <p>A thoughtful workspace for the people and progress that shape your campus community.</p>
+        </div>
+        <div class="campus-art" aria-hidden="true">
+            <div class="art-orbit orbit-large"></div>
+            <div class="art-orbit orbit-small"></div>
+            <div class="art-card">
+                <span class="art-cap">✦</span>
+                <span class="art-line line-long"></span>
+                <span class="art-line line-short"></span>
+                <span class="art-bars"><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+        </div>
+        <span class="panel-footer">CAMPUSFLOW · STUDENT MANAGEMENT</span>
+    </section>
+
+    <section class="login-main">
+        <div class="login-card">
+            <span class="mobile-brand">CAMPUSFLOW <i>✦</i></span>
+            <span class="section-kicker">ADMIN ACCESS</span>
+            <h2>Welcome back</h2>
+            <p class="login-description">Sign in to continue to your student workspace.</p>
+
+            <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
+
+            <form action="/login" method="post" id="loginForm">
+                <input type="hidden" name="_csrf" id="csrfToken">
+                <label class="form-field" for="username">Administrator username</label>
+                <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+
+                <label class="form-field password-label" for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+                <button class="sign-in-button" type="submit" id="signInButton" disabled>
+                    <span>Sign in to CampusFlow</span><span aria-hidden="true">→</span>
+                </button>
+            </form>
+            <p class="security-note"><span aria-hidden="true">◈</span> Secure administrator sign-in</p>
+        </div>
+        <footer class="login-footer">© <span id="currentYear"></span> CampusFlow Student Management</footer>
+    </section>
+</main>
+</body>
+</html>

@@ -45,6 +45,10 @@
                 <span class="profile-copy"><strong>Campus Admin</strong><small>Administrator</small></span>
                 <span class="profile-dot" title="Online"></span>
             </div>
+            <form class="logout-form" action="/logout" method="post">
+                <input type="hidden" name="_csrf" id="logoutCsrfToken">
+                <button type="submit"><span aria-hidden="true">↪</span> Sign out</button>
+            </form>
         </div>
     </aside>
 

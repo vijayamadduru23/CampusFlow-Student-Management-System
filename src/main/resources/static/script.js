@@ -13,6 +13,7 @@ const saveStudentButton = document.getElementById("saveStudentButton");
 const menuToggle = document.getElementById("menuToggle");
 const sidebar = document.getElementById("sidebar");
 const sidebarScrim = document.getElementById("sidebarScrim");
+let csrfToken;
 
 const state = {
     students: [],
@@ -32,7 +33,13 @@ const avatarColors = [
 document.addEventListener("DOMContentLoaded", () => {
     setPageDate();
     bindEvents();
-    refreshDashboard();
+    refreshCsrfToken()
+        .then(refreshDashboard)
+        .catch((error) => {
+            showToast("Secure connection unavailable", error.message, "error");
+            renderTableMessage("The secure session could not be initialized.", "Reload the page and sign in again.");
+            renderAnalyticsUnavailable();
+        });
 });
 
 function bindEvents() {
@@ -129,18 +136,28 @@ async function refreshDashboard() {
 
 async function request(url, options = {}) {
     let response;
+    const method = (options.method || "GET").toUpperCase();
+    const headers = {
+        ...(options.body ? { "Content-Type": "application/json" } : {}),
+        ...options.headers
+    };
+    if (!["GET", "HEAD", "OPTIONS", "TRACE"].includes(method)) {
+        headers[csrfToken.headerName] = csrfToken.token;
+    }
     try {
         response = await fetch(url, {
             ...options,
-            headers: {
-                ...(options.body ? { "Content-Type": "application/json" } : {}),
-                ...options.headers
-            }
+            credentials: "same-origin",
+            headers
         });
     } catch (error) {
         throw new Error("Unable to reach the server. Check your connection and try again.");
     }
 
+    if (response.status === 401) {
+        window.location.assign("/login.html?expired");
+        throw new Error("Your session has expired. Sign in again to continue.");
+    }
     if (!response.ok) {
         const message = await readErrorMessage(response);
         const error = new Error(message || `Request failed with status ${response.status}.`);
@@ -151,6 +168,19 @@ async function request(url, options = {}) {
 
     const contentType = response.headers.get("content-type") || "";
     return contentType.includes("application/json") ? response.json() : null;
+}
+
+async function refreshCsrfToken() {
+    const response = await fetch("/csrf", {
+        credentials: "same-origin",
+        headers: { Accept: "application/json" }
+    });
+    if (!response.ok) throw new Error("Unable to initialize secure requests.");
+    csrfToken = await response.json();
+    if (!csrfToken.token || !csrfToken.headerName) {
+        throw new Error("The server did not provide a valid request token.");
+    }
+    document.getElementById("logoutCsrfToken").value = csrfToken.token;
 }
 
 async function readErrorMessage(response) {
@@ -231,7 +261,7 @@ function renderStudentTable() {
             <td class="id-cell">#${escapeHtml(student.studentId)}</td>
             <td>
                 <div class="name-cell">
-                    <span class="student-avatar" style="${avatarStyle(student.name)}">${escapeHtml(getInitials(student.name))}</span>
+                    <span class="student-avatar avatar-color-${avatarColorIndex(student.name)}">${escapeHtml(getInitials(student.name))}</span>
                     <span>${escapeHtml(student.name)}</span>
                 </div>
             </td>
@@ -281,7 +311,7 @@ function renderRecentStudents() {
         .slice(0, 4);
     recentStudents.innerHTML = latestStudents.map((student) => `
         <div class="recent-item">
-            <span class="student-avatar" style="${avatarStyle(student.name)}">${escapeHtml(getInitials(student.name))}</span>
+            <span class="student-avatar avatar-color-${avatarColorIndex(student.name)}">${escapeHtml(getInitials(student.name))}</span>
             <span class="recent-copy">
                 <strong>${escapeHtml(student.name)}</strong>
                 <small>${escapeHtml(student.course)} · Student #${escapeHtml(student.studentId)}</small>
@@ -316,7 +346,7 @@ function renderAnalytics(students) {
                     <strong>${formatCount(count)}</strong>
                 </div>
                 <div class="chart-track" aria-hidden="true">
-                    <span class="course-chart-bar" style="width:${(count / largestCourse) * 100}%"></span>
+                    <progress class="course-chart-bar" max="${largestCourse}" value="${count}"></progress>
                 </div>
             </div>
         `).join("");
@@ -349,7 +379,6 @@ function renderAnalytics(students) {
 
     performanceSummary.textContent = `Class average ${formatMarks(average)} / 100 · ${formatCount(validMarks.length)} score${validMarks.length === 1 ? "" : "s"}`;
     performanceChart.innerHTML = distribution.map((range) => {
-        const percentage = (range.count / validMarks.length) * 100;
         return `
             <div class="performance-chart-row">
                 <div class="chart-row-heading">
@@ -357,7 +386,7 @@ function renderAnalytics(students) {
                     <strong>${formatCount(range.count)}</strong>
                 </div>
                 <div class="chart-track" role="meter" aria-label="${range.label} marks" aria-valuemin="0" aria-valuemax="${validMarks.length}" aria-valuenow="${range.count}">
-                    <span class="performance-chart-bar" style="width:${percentage}%"></span>
+                    <progress class="performance-chart-bar" max="${validMarks.length}" value="${range.count}"></progress>
                 </div>
             </div>
         `;
@@ -569,10 +598,9 @@ function getInitials(name) {
     return parts.slice(0, 2).map((part) => part[0].toLocaleUpperCase()).join("") || "S";
 }
 
-function avatarStyle(name) {
+function avatarColorIndex(name) {
     const seed = String(name ?? "").split("").reduce((total, character) => total + character.charCodeAt(0), 0);
-    const [background, color] = avatarColors[seed % avatarColors.length];
-    return `color:${color};background:${background}`;
+    return seed % avatarColors.length;
 }
 
 function escapeHtml(value) {

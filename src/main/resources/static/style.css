@@ -99,6 +99,10 @@ a { color: inherit; text-decoration: none; }
 .help-card strong { display: block; font-family: Manrope, sans-serif; font-size: 13px; line-height: 1.55; }
 .help-card p { margin: 7px 0 0; color: #9da6c2; font-size: 10px; }
 .profile-chip { display: flex; align-items: center; gap: 10px; padding: 13px 8px 1px; border-top: 1px solid rgba(255,255,255,.09); }
+.logout-form { margin-top: 10px; }
+.logout-form button { display: flex; width: 100%; align-items: center; gap: 9px; padding: 9px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: #b5bdd4; background: rgba(255,255,255,.04); font-size: 10px; text-align: left; }
+.logout-form button:hover { color: #fff; background: rgba(255,255,255,.09); }
+.logout-form button span { font-size: 15px; }
 .avatar, .top-avatar { display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; font-size: 10px; font-weight: 700; }
 .avatar { width: 34px; height: 34px; color: #d3ceff; background: linear-gradient(145deg, #554ca5, #343d70); }
 .profile-copy { display: grid; gap: 3px; }
@@ -183,9 +187,12 @@ h1 { margin-bottom: 7px; color: #1b2541; font-size: clamp(24px, 3vw, 31px); font
 .chart-row-label { min-width: 0; overflow: hidden; color: #718098; text-overflow: ellipsis; white-space: nowrap; }
 .chart-row-heading strong { flex: 0 0 auto; color: #35415c; font-size: 10px; font-weight: 700; }
 .chart-track { height: 7px; overflow: hidden; border-radius: 10px; background: #f0f2f7; }
-.chart-track > span { display: block; height: 100%; min-width: 0; border-radius: inherit; transition: width .45s ease; }
-.course-chart-bar { background: linear-gradient(90deg, #7166e5, #9b91f1); }
-.performance-chart-bar { background: linear-gradient(90deg, #35b39a, #8ad7be); }
+.chart-track > progress { display: block; width: 100%; height: 100%; border: 0; appearance: none; background: transparent; }
+.chart-track > progress::-webkit-progress-bar { background: transparent; }
+.course-chart-bar::-webkit-progress-value { border-radius: inherit; background: linear-gradient(90deg, #7166e5, #9b91f1); }
+.performance-chart-bar::-webkit-progress-value { border-radius: inherit; background: linear-gradient(90deg, #35b39a, #8ad7be); }
+.course-chart-bar::-moz-progress-bar { border-radius: inherit; background: linear-gradient(90deg, #7166e5, #9b91f1); }
+.performance-chart-bar::-moz-progress-bar { border-radius: inherit; background: linear-gradient(90deg, #35b39a, #8ad7be); }
 .chart-empty { display: grid; min-height: 170px; align-content: center; justify-items: center; padding: 18px; color: #98a2b3; font-size: 10px; line-height: 1.6; text-align: center; }
 .chart-empty strong { margin-bottom: 4px; color: #5e6a80; font-size: 12px; }
 
@@ -201,6 +208,11 @@ h2 { margin: 0; color: #202a46; font-size: 16px; font-weight: 800; letter-spacin
 .recent-list { display: grid; }
 .recent-item { display: flex; align-items: center; gap: 10px; min-height: 46px; border-top: 1px solid #f0f2f7; }
 .student-avatar { display: grid; flex: 0 0 auto; width: 30px; height: 30px; place-items: center; border-radius: 10px; font-size: 9px; font-weight: 700; }
+.avatar-color-0 { color: #6559ce; background: #eeeaff; }
+.avatar-color-1 { color: #228d7e; background: #e6f7f4; }
+.avatar-color-2 { color: #c67d36; background: #fff1e5; }
+.avatar-color-3 { color: #4d72bf; background: #eaf1ff; }
+.avatar-color-4 { color: #bb5d83; background: #fcebf2; }
 .recent-copy { min-width: 0; flex: 1; }
 .recent-copy strong { display: block; overflow: hidden; color: #35415c; font-size: 10px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .recent-copy small { display: block; overflow: hidden; margin-top: 3px; color: #9ba6b7; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
